@@ -5,9 +5,146 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tailwind</title>
+
+    <!--Font Awesome icon stylesheet-->
+    <script
+      src="https://kit.fontawesome.com/2bbb8d678d.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--Google Fonts-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Graduate&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!--jQuery UI-->
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <!--Leaflet stylesheet-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="/dist/output.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1 class="text-3xl font-bold">hi there</h1>
+    <div class="grid grid-rows-9 grid-cols-3 h-screen">
+      <header
+        class="bg-red-400 row-span-2 col-span-3 text-white text-7xl font-bold p-5"
+      >
+        <h1>END WORLD THIRST</h1>
+      </header>
+
+      <main
+        class="grid grid-cols-2 col-span-2 row-span-5 justify-center bg-orange-100"
+      >
+        <section class="grid grid-rows-6 col-span-1 left p-5">
+          <article class="about-us row-span-2">
+            <h2 class="how-to font-bold text-2xl">HOW DOES THIS WORK?</h2>
+            <ul class="detail list-decimal px-5 py-5">
+              <li>Enter your zipcode</li>
+              <li>Browse your search results on the right</li>
+              <li>
+                Click on <i class="fa-regular fa-heart"></i> to save to your
+                favorites list
+              </li>
+            </ul>
+          </article>
+          <article class="search-zip row-span-1">
+            <h3>Search by zipcode:</h3>
+            <input
+              type="text"
+              name="search-zipcode"
+              id="search-zipcode"
+              placeholder="18914"
+            />
+            <p class="warning-zipcode text-red-700">
+              Please enter a valid zipcode.
+            </p>
+          </article>
+          <button id="submit" class="bg-white h-1/4 row-span-1">Submit</button>
+        </section>
+        <section class="right p-5 font-bold text-2xl">
+          <div>RESULTS FOR:</div>
+          <div class="user-input"></div>
+          <div
+            id="map"
+            class="border-solid border-1 border-black rounded"
+          ></div>
+          <article class="py-5 font-normal text-base">
+            <div class="place-name text-xl"></div>
+            <div class="street-address"></div>
+            <div class="phone"></div>
+            <div class="website-url"></div>
+          </article>
+        </section>
+      </main>
+
+      <aside class="bg-yellow-200 row-span-5 col-span-1 p-5 font-bold text-2xl">
+        <ul>
+          <li>FAVORITES <i class="fa-solid fa-heart"></i></li>
+        </ul>
+      </aside>
+      <footer
+        class="grid grid-cols-2 grid-rows-1 items-center bg-emerald-300 row-span-1 col-span-3 p-5"
+      >
+        <div class="icons grid grid-rows-2 gap-2 row-span-1">
+          <ul
+            class="icons grid grid-cols-4 row-span-1 items-center font-bold text-xl text-white"
+          >
+            <li class="col-span-1">LET'S CONNECT:</li>
+            <li class="justify-self-center">
+              <i
+                class="fa-brands fa-facebook text-white text-3xl col-span-1"
+              ></i>
+            </li>
+            <li class="justify-self-center">
+              <i
+                class="fa-brands fa-instagram text-white text-3xl col-span-2"
+              ></i>
+            </li>
+            <li></li>
+          </ul>
+
+          <ul
+            class="icons grid grid-cols-4 row-span-1 gap-1 items-center font-bold text-xl text-white"
+          >
+            <li class="col-span-1 self-center">MOBILE:</li>
+            <li class="justify-self-center self-center">
+              <i class="fa-brands fa-apple text-white text-3xl col-span-1"></i>
+            </li>
+            <li class="justify-self-center">
+              <i
+                class="fa-brands fa-google-play text-white text-3xl col-span-2"
+              ></i>
+            </li>
+          </ul>
+        </div>
+        <div class="contact grid grid-cols-2 grid-rows-2 row-span-1">
+          <p
+            class="contact-details text-xl font-bold text-white col-span-1 row-span-2 text-center"
+          >
+            CONTACT:
+          </p>
+          <div class="grid grid-rows-3 col-span-1 row-span-2 text-white gap-6">
+            <p>Address: 123 Main Street</p>
+            <p>Phone: (215) 555-5555</p>
+            <p>Email: EWT@ewt.com</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+    <script src="script.js"></script>
   </body>
 </html>
