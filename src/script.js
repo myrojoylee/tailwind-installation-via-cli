@@ -17,6 +17,9 @@ let allData,
   sortedByDistance;
 let distanceAndBoolean = [];
 let nameAndCoordinates = [];
+let withinFiveMiles = [];
+let withinTenMiles = [];
+const WeatherAPIKey = "021e75b0e3380e236b4ff6031ae2dde4";
 const submitBtn = document.querySelector("#submit");
 const userZipCode = document.querySelector("#search-zipcode");
 const userInput = document.querySelector(".user-input");
@@ -32,8 +35,16 @@ submitBtn.addEventListener("click", function () {
   fetchMasterData(zipCode);
 });
 
+// function fetchMasterData(zipCode) {
+//   let postalURL = `https://api.openbrewerydb.org/v1/breweries?by_postal=${zipCode}`;
+
+//   fetch(postalURL)
+//     .then((response) => response.json())
+//     .then(getCoordinates);
+// }
+
 function fetchMasterData(zipCode) {
-  let postalURL = `https://api.openbrewerydb.org/v1/breweries?by_postal=${zipCode}`;
+  let postalURL = `https://api.openweathermap.org/geo/1.0/zip?zip=${zipCode}&appid=${WeatherAPIKey}`;
 
   fetch(postalURL)
     .then((response) => response.json())
@@ -44,19 +55,22 @@ function fetchMasterData(zipCode) {
  * @param {*} allData
  */
 function getCoordinates(allData) {
-  console.log(allData);
-  lat = Number(allData[0].latitude);
-  lon = Number(allData[0].longitude);
+  let y = allData;
+  console.log(y);
+  lat = y.lat;
+  lon = y.lon;
+  console.log(lat);
+  console.log(lon);
   referenceLocation = {
     lat: lat,
     lon: lon,
   };
   fetchByDistanceData();
   console.log(referenceLocation);
-  nameOfBrewery = allData[0].name;
-  address = allData[0].address_1;
-  phone = allData[0].phone;
-  website = allData[0].website_url;
+  // nameOfBrewery = allData[0].name;
+  // address = allData[0].address_1;
+  // phone = allData[0].phone;
+  // website = allData[0].website_url;
 
   renderDetails();
 }
@@ -86,6 +100,7 @@ function getArraySortedByDistance(x) {
     nameAndCoordinates.push(tempObject);
   }
   console.log(nameAndCoordinates);
+  checkCoordinates();
 }
 
 /**
@@ -116,6 +131,9 @@ function renderDetails() {
 
 function checkCoordinates() {
   let tempArray;
+  const fiveMileDistance = 8.04672;
+  const tenMileDistance = 16.0934;
+
   for (let i = 0; i < nameAndCoordinates.length; i++) {
     // in this case, distanceOfTempLocation is they hypotenuse (h)
     // in Pythagoras' theorem, with h^2 = x^2 + y^2
@@ -130,23 +148,20 @@ function checkCoordinates() {
       lon: nameAndCoordinates[i].lon,
       distanceFromOrigin: distanceOfTempLocation,
     };
+
+    if (
+      0 <= distanceOfTempLocation &&
+      distanceOfTempLocation <= tenMileDistance
+    ) {
+      if (distanceOfTempLocation <= fiveMileDistance) {
+        withinFiveMiles.push(tempArray);
+      }
+      withinTenMiles.push(tempArray);
+    }
+
     distanceAndBoolean.push(tempArray);
   }
-
-  // has distance from origin point in km
+  console.log(withinFiveMiles);
+  console.log(withinTenMiles);
   console.log(distanceAndBoolean);
 }
-
-// $(function () {
-//   $("#size").selectmenu();
-//   $("#salutation").selectmenu();
-// });
-
-/**
- * datepicker function
- */
-// $(function () {
-//   $("#datepicker").datepicker();
-//   const value = $("#datepicker").val();
-//   console.log(value);
-// });

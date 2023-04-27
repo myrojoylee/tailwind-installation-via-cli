@@ -35,8 +35,23 @@ h1 {
   width: 50%;
 }
 
-#map {
+#map-wrapper {
   height: 200px;
+  /* border: dashed 1px gray; */
+  background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+  padding: 2%;
+}
+
+#map {
+  background-color: grey;
+  height: calc(100% - 2px);
+  width: calc(100% - 2px);
 }
 
 fieldset {
@@ -54,9 +69,6 @@ label {
   display: grid;
   font-size: 1em;
 }
-/* .overflow {
-  height: 200px;
-} */
 
 #submit {
   width: fit-content;
@@ -76,6 +88,18 @@ h2 {
 .search-zip h3,
 .date {
   font-size: 1em;
+}
+
+.checkboxes {
+  display: grid;
+  font-weight: normal;
+}
+
+.five-miles,
+.ten-miles {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
 
 footer {
