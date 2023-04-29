@@ -68,35 +68,53 @@
           </article>
           <button id="submit" class="bg-white h-1/4 row-span-1">Submit</button>
         </section>
-        <section class="right p-5 font-bold text-2xl">
+        <section class="right p-5 font-bold text-2xl parentalAdvisory">
           <div>RESULTS FOR:</div>
           <div class="user-input"></div>
           <div id="map-wrapper" class="border-solid border-black rounded">
             <div id="map"></div>
           </div>
-          <div class="checkboxes">
-            <p>Choose search radius:</p>
-            <div class="five-miles">
-              <input
-                type="radio"
-                id="fiveMiles"
-                value="fiveMiles"
-                name="mileRadius"
-                checked
-              />
-              <label for="fiveMiles"> 5 miles </label>
-            </div>
-            <div class="ten-miles">
-              <input
-                type="radio"
-                id="tenMiles"
-                value="tenMiles"
-                name="mileRadius"
-              />
-              <label for="tenMiles"> 10 miles </label>
+          <div class="column is-4 has-background-warning-light length">
+            <p class="title is-size-2 has-text-centered">FIND BREWS</p>
+            <section class="name"></section>
+            <section class="map">
+              <div id="map"></div>
+            </section>
+            <section class="address"></section>
+            <div id="search-radius" class="content container">
+              <h2
+                class="subtitle has-text-weight-bold has-text-centered is-underlined"
+              >
+                Choose your search radius
+              </h2>
+              <select class="select is-fullwidth is-size-4" id="radius-check">
+                <option id="nomiles" value="nada" name="radius-option">
+                  ---
+                </option>
+                <option id="five-miles" value="5 miles" name="radius-option">
+                  5 Miles
+                </option>
+                <option id="ten-miles" value="10 miles" name="radius-option">
+                  10 Miles
+                </option>
+                <option
+                  id="fifteen-miles"
+                  value="10 miles"
+                  name="radius-option"
+                >
+                  15 Miles
+                </option>
+              </select>
             </div>
           </div>
-          <article class="py-5 font-normal text-base">
+          <!-- <div class="column is-4 has-background-warning-light length">
+            <section class="name"></section>
+            <section class="map">
+              <div id="map"></div>
+            </section>
+            <section class="address"></section>
+          </div> -->
+          <article class="py-5 font-normal text-base article-sibling">
             <div class="place-name text-xl"></div>
             <div class="street-address"></div>
             <div class="phone"></div>
