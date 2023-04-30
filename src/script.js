@@ -51,6 +51,7 @@ let createList,
   layerGroupFifteen;
 
 submitBtn.addEventListener("click", function () {
+  radiusCheck.addEventListener("change", displayLists);
   userInput.textContent = Number(userZipCode.value);
   zipCode = Number(userZipCode.value);
   fetchMasterData(zipCode);
@@ -211,7 +212,6 @@ function createFiveList() {
     createListItem.textContent = withinFiveMiles[i].name;
     createList.appendChild(createListItem);
     createListItem.style.fontWeight = "400";
-    createList.style.display = "none";
 
     markerFive = new L.marker([withinFiveMiles[i].lat, withinFiveMiles[i].lon])
       .bindPopup(withinFiveMiles[i].name)
@@ -234,7 +234,7 @@ function createTenList() {
     createListItemTen.textContent = withinTenMiles[i].name;
     createListTen.appendChild(createListItemTen);
     createListItemTen.style.fontWeight = "400";
-    createListTen.style.display = "none";
+
     markerTen = new L.marker([withinTenMiles[i].lat, withinTenMiles[i].lon])
       .bindPopup(withinTenMiles[i].name)
       .addTo(map);
@@ -256,7 +256,6 @@ function createFifteenList() {
     createListItemFifteen.textContent = withinFifteenMiles[i].name;
     createListFifteen.appendChild(createListItemFifteen);
     createListItemFifteen.style.fontWeight = "400";
-    createListFifteen.style.display = "none";
 
     markerFifteen = new L.marker([
       withinFifteenMiles[i].lat,
@@ -269,18 +268,6 @@ function createFifteenList() {
   layerGroupFifteen = new L.layerGroup(tempMarkerLayerFifteen);
   layerGroupFifteen.addTo(map);
 }
-
-// radioButtons.forEach((radio) => {
-//   radio.addEventListener("click", displayLists);
-// });
-
-// radiusOptions.forEach((option) => {
-//   option.addEventListener("click", function () {
-//     console.log("here");
-//   });
-// });
-
-radiusCheck.addEventListener("change", displayLists);
 
 function eraseOtherLists() {
   let findLists = parentalAdvisory.querySelectorAll("ul");
@@ -301,9 +288,9 @@ function displayLists() {
   }).addTo(map);
   eraseOtherLists();
   if (radiusCheck.value === "5 miles") {
-    if (circle !== undefined) {
-      map.removeLayer(circle);
-    }
+    // if (circle !== undefined) {
+    //   map.removeLayer(circle);
+    // }
     createFiveList();
     map.addLayer(layerGroupFive);
     map.setZoom(10);
@@ -311,26 +298,21 @@ function displayLists() {
 
     document.querySelector("#fiveMileList").style.display = "block";
   } else if (radiusCheck.value === "10 miles") {
-    if (circle !== undefined) {
-      map.removeLayer(circle);
-    }
+    // if (circle !== undefined) {
+    //   map.removeLayer(circle);
+    // }
 
     createTenList();
     map.setZoom(9);
     renderSearchCircle(24150);
-    document.querySelector("#tenMileList").style.display = "block";
-    // document.querySelector("#fiveMileList").style.display = "none";
-    // document.querySelector("#fifteenMileList").style.display = "none";
   } else {
-    if (circle !== undefined) {
-      map.removeLayer(circle);
-    }
+    // if (circle !== undefined) {
+    //   map.removeLayer(circle);
+    // }
     createFifteenList();
     map.setZoom(9);
     renderSearchCircle(24150);
 
     document.querySelector("#fifteenMileList").style.display = "block";
-    // document.querySelector("#fiveMileList").style.display = "none";
-    // document.querySelector("#tenMileList").style.display = "none";
   }
 }
