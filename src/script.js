@@ -5,7 +5,9 @@ let allData,
   address,
   phone,
   website,
-  marker,
+  markerFive,
+  markerTen,
+  markerFifteen,
   circle,
   kmY,
   kmX,
@@ -35,14 +37,18 @@ const parentalAdvisory = document.querySelector(".parentalAdvisory");
 const radioButtons = document.querySelectorAll('input[name="mileRadius"]');
 const radiusOptions = document.querySelectorAll('input[name="radius-option"]');
 const radiusCheck = document.querySelector("#radius-check");
+
 let state = 0;
 let lat, lon;
 let createList,
   createListItem,
   createListTen,
+  createListFifteen,
   createListItemTen,
+  createListItemFifteen,
   layerGroupFive,
-  layerGroupTen;
+  layerGroupTen,
+  layerGroupFifteen;
 
 submitBtn.addEventListener("click", function () {
   userInput.textContent = Number(userZipCode.value);
@@ -195,6 +201,7 @@ function checkCoordinates() {
 
 function createFiveList() {
   let tempMarkerLayerFive = [];
+
   createList = document.createElement("ul");
   createList.textContent = "Within 5 miles:";
   createList.setAttribute("id", "fiveMileList");
@@ -206,17 +213,18 @@ function createFiveList() {
     createListItem.style.fontWeight = "400";
     createList.style.display = "none";
 
-    marker = new L.marker([withinFiveMiles[i].lat, withinFiveMiles[i].lon])
+    markerFive = new L.marker([withinFiveMiles[i].lat, withinFiveMiles[i].lon])
       .bindPopup(withinFiveMiles[i].name)
       .addTo(map);
-    tempMarkerLayerFive.push(marker);
-    layerGroupFive = L.layerGroup(tempMarkerLayerFive);
+    tempMarkerLayerFive.push(markerFive);
   }
+  layerGroupFive = new L.layerGroup(tempMarkerLayerFive);
   layerGroupFive.addTo(map);
 }
 
 function createTenList() {
   let tempMarkerLayerTen = [];
+
   createListTen = document.createElement("ul");
   createListTen.textContent = "Within 10 miles:";
   createListTen.setAttribute("id", "tenMileList");
@@ -227,13 +235,39 @@ function createTenList() {
     createListTen.appendChild(createListItemTen);
     createListItemTen.style.fontWeight = "400";
     createListTen.style.display = "none";
-    marker = new L.marker([withinTenMiles[i].lat, withinTenMiles[i].lon])
+    markerTen = new L.marker([withinTenMiles[i].lat, withinTenMiles[i].lon])
       .bindPopup(withinTenMiles[i].name)
       .addTo(map);
-    tempMarkerLayerTen.push(marker);
-    layerGroupTen = L.layerGroup(tempMarkerLayerTen);
+    tempMarkerLayerTen.push(markerTen);
   }
+  layerGroupTen = new L.layerGroup(tempMarkerLayerTen);
   layerGroupTen.addTo(map);
+}
+
+function createFifteenList() {
+  let tempMarkerLayerFifteen = [];
+
+  createListFifteen = document.createElement("ul");
+  createListFifteen.textContent = "Within 15 miles:";
+  createListFifteen.setAttribute("id", "fifteenMileList");
+  parentalAdvisory.insertBefore(createListFifteen, articleSibling);
+  for (let i = 0; i < withinFifteenMiles.length; i++) {
+    createListItemFifteen = document.createElement("li");
+    createListItemFifteen.textContent = withinFifteenMiles[i].name;
+    createListFifteen.appendChild(createListItemFifteen);
+    createListItemFifteen.style.fontWeight = "400";
+    createListFifteen.style.display = "none";
+
+    markerFifteen = new L.marker([
+      withinFifteenMiles[i].lat,
+      withinFifteenMiles[i].lon,
+    ])
+      .bindPopup(withinFifteenMiles[i].name)
+      .addTo(map);
+    tempMarkerLayerFifteen.push(markerFifteen);
+  }
+  layerGroupFifteen = new L.layerGroup(tempMarkerLayerFifteen);
+  layerGroupFifteen.addTo(map);
 }
 
 // radioButtons.forEach((radio) => {
@@ -248,29 +282,55 @@ function createTenList() {
 
 radiusCheck.addEventListener("change", displayLists);
 
+function eraseOtherLists() {
+  let findLists = parentalAdvisory.querySelectorAll("ul");
+  for (let i = 0; i < findLists.length; i++) {
+    findLists[i].remove();
+  }
+}
+
 function displayLists() {
   console.log("we changed options!!!!");
-  createFiveList();
-  createTenList();
+  map.eachLayer(function (layer) {
+    map.removeLayer(layer);
+  });
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  eraseOtherLists();
   if (radiusCheck.value === "5 miles") {
     if (circle !== undefined) {
       map.removeLayer(circle);
     }
+    createFiveList();
+    map.addLayer(layerGroupFive);
     map.setZoom(10);
     renderSearchCircle(16100);
-    map.removeLayer(layerGroupTen);
-    map.addLayer(layerGroupFive);
+
     document.querySelector("#fiveMileList").style.display = "block";
-    document.querySelector("#tenMileList").style.display = "none";
+  } else if (radiusCheck.value === "10 miles") {
+    if (circle !== undefined) {
+      map.removeLayer(circle);
+    }
+
+    createTenList();
+    map.setZoom(9);
+    renderSearchCircle(24150);
+    document.querySelector("#tenMileList").style.display = "block";
+    // document.querySelector("#fiveMileList").style.display = "none";
+    // document.querySelector("#fifteenMileList").style.display = "none";
   } else {
     if (circle !== undefined) {
       map.removeLayer(circle);
     }
+    createFifteenList();
     map.setZoom(9);
     renderSearchCircle(24150);
-    map.removeLayer(layerGroupFive);
-    map.addLayer(layerGroupTen);
-    document.querySelector("#tenMileList").style.display = "block";
-    document.querySelector("#fiveMileList").style.display = "none";
+
+    document.querySelector("#fifteenMileList").style.display = "block";
+    // document.querySelector("#fiveMileList").style.display = "none";
+    // document.querySelector("#tenMileList").style.display = "none";
   }
 }
